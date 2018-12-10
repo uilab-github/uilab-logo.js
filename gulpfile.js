@@ -4,19 +4,32 @@ const webpack = require('webpack');
 const DevServer = require('webpack-dev-server');
 const webpackConfig = require('./webpack.config');
 
+gulp.task('build-webpack', callback => {
+  webpack(webpackConfig('production'), (err, stats) => {
+    if (err) {
+      throw Error('build-webpack', err);
+    }
+    if (stats.hasErrors()) {
+      throw Error('Compile errors have occurred.');
+    }
+    callback();
+  });
+});
+
 gulp.task('build-babel', () => {
-  return gulp.src('src/**/*')
+  return gulp.src(['src/**/*', '!src/browser.js'])
     .pipe(babel())
     .pipe(gulp.dest('lib'));
 });
 
 gulp.task('dev-webpack', () => {
-  DevServer.addDevServerEntrypoints(webpackConfig, {
-    ...webpackConfig.devServer,
+  const config = webpackConfig('development');
+  DevServer.addDevServerEntrypoints(config, {
+    ...config.devServer,
     host: 'localhost',
   });
   const compiler = webpack(webpackConfig);
-  const server = new DevServer(compiler, webpackConfig.devServer);
+  const server = new DevServer(compiler, config.devServer);
   server.listen(4000, 'localhost', err => {
     if (err) {
       throw err;
@@ -26,4 +39,4 @@ gulp.task('dev-webpack', () => {
 });
 
 gulp.task('dev', ['dev-webpack']);
-gulp.task('build', ['build-babel']);
+gulp.task('build', ['build-babel', 'build-webpack']);

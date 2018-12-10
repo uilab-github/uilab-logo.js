@@ -1,11 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
 
-module.exports = {
+module.exports = mode => ({
     cache: true,
-    mode: 'development',
+    mode,
     entry: {
-        bundle: ['babel-polyfill', './src/browser.js'],
+        'uilab-logo.bundle': ['babel-polyfill', './src/browser.js'],
     },
     output: {
         path: path.join(__dirname, 'lib'),
@@ -25,13 +25,13 @@ module.exports = {
             }
         ],
     },
-    plugins: [
+    plugins: mode === 'development' ? [
         new webpack.HotModuleReplacementPlugin(),
-    ],
+    ] : [],
     devServer: {
         hot: true,
         historyApiFallback: true,
         contentBase: '.',
         publicPath: '/assets/',
     },
-}
+});
