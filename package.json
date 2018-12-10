@@ -1,6 +1,6 @@
 {
   "name": "uilab-logo.js",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A Javascript library that draws dynamic logo for Users & Informations lab.",
   "main": "lib/uilab-logo.js",
   "repository": "git@github.com:uilab-github/uilab-logo.js.git",

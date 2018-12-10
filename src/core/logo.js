@@ -6,6 +6,7 @@ const DEFAULT_OPTIONS = {
     bigRadius: 0.08,
     interval: 500,
     duration: 200,
+    rotate: true,
     animation: [
         { enlarge: [[0, 1]], color: [[0, 1]] },
         { enlarge: [[1, 1]] },
@@ -83,9 +84,11 @@ export default class Logo {
     }
 
     async play() {
-        const { animation, bigRadius, duration, size } = this.options;
-        const rotation = this.getRandInt(0, 3) * 90;
-        this.logo.transform({ rotation, cx: size * 0.5, xy: size * 0.5 });
+        const { animation, bigRadius, duration, size, rotate } = this.options;
+        if (rotate) {
+            const rotation = this.getRandInt(0, 3) * 90;
+            this.logo.transform({ rotation, cx: size * 0.5, xy: size * 0.5 });
+        }
         for (const frame of animation) {
             const colorPoints = (frame.color || []);
             colorPoints.forEach(p => {
