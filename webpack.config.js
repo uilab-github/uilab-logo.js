@@ -5,7 +5,7 @@ module.exports = {
     cache: true,
     mode: 'development',
     entry: {
-        bundle: ['babel-polyfill', './src/index.js'],
+        bundle: ['babel-polyfill', './src/browser.js'],
     },
     output: {
         path: path.join(__dirname, 'lib'),
