@@ -28,7 +28,7 @@ gulp.task('dev-webpack', () => {
     ...config.devServer,
     host: 'localhost',
   });
-  const compiler = webpack(webpackConfig);
+  const compiler = webpack(config);
   const server = new DevServer(compiler, config.devServer);
   server.listen(4000, 'localhost', err => {
     if (err) {
